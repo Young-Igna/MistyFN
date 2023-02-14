@@ -9,7 +9,7 @@ def show_error(msg):
         [sg.Push(), sg.Button("OK", key="Exit", enable_events=True), sg.Push()],
         [sg.VPush()]
     ]
-    window = sg.Window("Error", layout, finalize=True)
+    window = sg.Window("Error", layout, finalize=True, icon="src/icon.ico")
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -29,7 +29,7 @@ def show_success(msg):
         [sg.Push(), sg.Button("OK", key="Exit", enable_events=True), sg.Push()],
         [sg.VPush()]
     ]
-    window = sg.Window("Success", layout, finalize=True)
+    window = sg.Window("Success", layout, finalize=True, icon="src/icon.ico")
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -47,7 +47,7 @@ def show_info(msg):
         [sg.Push(), sg.Button("OK", key="Exit", enable_events=True), sg.Push()],
         [sg.VPush()]
     ]
-    window = sg.Window("Info", layout, finalize=True)
+    window = sg.Window("Info", layout, finalize=True, icon="src/icon.ico")
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -65,7 +65,7 @@ def show_warning(msg):
         [sg.Push(), sg.Button("OK", key="Exit", enable_events=True), sg.Push()],
         [sg.VPush()]
     ]
-    window = sg.Window("Warning", layout, finalize=True)
+    window = sg.Window("Warning", layout, finalize=True, icon="src/icon.ico")
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:
@@ -83,7 +83,7 @@ def show_custom_prompt(msg, title, button):
         [sg.Push(), sg.Button(button, key="Exit", enable_events=True), sg.Push()],
         [sg.VPush()]
     ]
-    window = sg.Window(title, layout, finalize=True)
+    window = sg.Window(title, layout, finalize=True, icon="src/icon.ico")
     while True:
         event, values = window.read()
         if event == sg.WIN_CLOSED:

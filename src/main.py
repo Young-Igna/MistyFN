@@ -54,7 +54,7 @@ def sensitivity_setup():
         [sg.VPush()]
     ]
 
-    window = sg.Window("Sensitivity Setup", layout, finalize=True)
+    window = sg.Window("Sensitivity Setup", layout, finalize=True, icon="src/icon.ico")
 
     while True:
         event, values = window.read()

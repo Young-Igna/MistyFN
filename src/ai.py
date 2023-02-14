@@ -84,7 +84,7 @@ class AI:
              sg.Push()],
             [sg.VPush()]
         ]
-        window = sg.Window("Downloading...", layout, finalize=True)
+        window = sg.Window("Downloading...", layout, finalize=True, icon="src/icon.ico")
         self.model = torch.hub.load('MistyAI/MistyFN-YOLOv5', 'custom', path='src/best.pt', force_reload=True)
         window.close()
         if not torch.cuda.is_available():
@@ -364,7 +364,7 @@ class AI:
 
         ]
 
-        self.window = sg.Window("MistyFN", self.layout, finalize=True)
+        self.window = sg.Window("MistyFN", self.layout, finalize=True, icon="src/icon.ico")
 
         keyboard.Listener(on_release=self.on_release).start()
 
