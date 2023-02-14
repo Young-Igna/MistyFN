@@ -25,9 +25,8 @@ version 515 or higher).**
 
 # Changelog
 
-### BETA:
-
-First public release of test version.
+### 1.0.0b:
+First public release of beta version.
 
 # Credits
 
