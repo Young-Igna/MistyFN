@@ -85,6 +85,8 @@ class AI:
             [sg.VPush()]
         ]
         window = sg.Window("Downloading...", layout, finalize=True, icon="src/icon.ico")
+        window.set_min_size((300, 1))
+        window.read(timeout=1)
         self.model = torch.hub.load('MistyAI/MistyFN-YOLOv5', 'custom', path='src/best.pt', force_reload=True)
         window.close()
         if not torch.cuda.is_available():
@@ -365,6 +367,7 @@ class AI:
         ]
 
         self.window = sg.Window("MistyFN", self.layout, finalize=True, icon="src/icon.ico")
+        self.window.set_min_size((300, 1))
 
         keyboard.Listener(on_release=self.on_release).start()
 
@@ -396,3 +399,7 @@ class AI:
             if event == "save_cfg":
                 with open("src/configs/config.json", "w") as f:
                     json.dump(self.config, f)
+
+
+if __name__ == '__main__':
+    show_error("Start MistyFN with start.vbs in root directory!")

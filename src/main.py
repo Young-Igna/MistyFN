@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import webbrowser
 
 import PySimpleGUI as sg
@@ -12,6 +13,8 @@ sg.theme("DarkGrey5")
 
 version = "1.0.0b"
 
+# make debug var that will be usable in all files without having to import it
+debug = False
 
 def sensitivity_setup():
     # layout with 1 slider of X/Y sensitivity and 1 slider of targeting/scope sensitivity
@@ -55,6 +58,7 @@ def sensitivity_setup():
     ]
 
     window = sg.Window("Sensitivity Setup", layout, finalize=True, icon="src/icon.ico")
+    window.set_min_size((300, 1))
 
     while True:
         event, values = window.read()
@@ -110,6 +114,7 @@ def main():
     ]
 
     window = sg.Window("MistyFN", layout, finalize=True, icon="src/icon.ico")
+    window.set_min_size((300, 1))
 
     # if config.json does exist, enable the start button
     if os.path.exists("src/configs/config.json"):
@@ -131,6 +136,13 @@ def main():
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        if sys.argv[1] == "debug":
+            debug = True
+            msg_utils.show_warning("Running in debug mode\nMake sure you know what you are doing.\nWhen using this mode, do not expect official support.")
+        else:
+            debug = False
+
     update_info = check_for_update()
     if update_info is not None:
         response = msg_utils.show_custom_prompt(
