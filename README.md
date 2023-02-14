@@ -18,7 +18,7 @@ version 515 or higher).**
 
 **After installation, restart your computer.**
 
-3. Download/clone the repository and run **install_requirements**.bat.\
+3. Download **latest** version from **[releases tab](https://github.com/MistyAI/MistyFN/releases/latest)** and run **install_requirements**.bat.\
    **Don't turn off any window that shows up, everything will close automatically after installation!**
 
 4. Run **MistyFN** via **start.vbs** file.
