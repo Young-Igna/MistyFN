@@ -25,6 +25,10 @@ version 515 or higher).**
 
 # Changelog
 
+### 1.0.1b:
+Fixed missing application icon in specific cases. \
+Resized some windows so that their title will always be visible.
+
 ### 1.0.0b:
 First public release of beta version.
 
