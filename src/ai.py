@@ -252,7 +252,7 @@ class AI:
             players = self.detect_players(frame)
             closest_player = self.get_closest_player(players)
             if self.enabled:
-                threading.Thread(target=self.handle_fear_logic, args=(closest_player,)).start()
+                threading.Thread(target=self.handle_misty_logic, args=(closest_player,)).start()
             if self.config["visualize"]:
                 # threading.Thread(target=self.update_visualizer, args=(frame, players, closest_player)).start()
                 for player in players:
@@ -308,7 +308,7 @@ class AI:
             else:
                 self.window.TKroot.attributes("-topmost", False)
 
-    def handle_fear_logic(self, closest_player):
+    def handle_misty_logic(self, closest_player):
         if closest_player:
             relative_head_X, relative_head_Y = closest_player["relative_head_X"], closest_player[
                 "relative_head_Y"]

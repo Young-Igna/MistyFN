@@ -130,8 +130,8 @@ def main():
             break
         if event == "start":
             window.close()
-            FearAI = AI(debug)
-            FearAI.start()
+            MistyFN = AI(debug)
+            MistyFN.start()
             break
         if event == "sens":
             window.close()
