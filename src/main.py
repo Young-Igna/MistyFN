@@ -16,7 +16,11 @@ version = "1.0.1b"
 # make debug var that will be usable in all files without having to import it
 debug = False
 
+
 def sensitivity_setup():
+    # if configs folder doesnt exist, create it
+    if not os.path.exists("src/configs"):
+        os.mkdir("src/configs")
     # layout with 1 slider of X/Y sensitivity and 1 slider of targeting/scope sensitivity
     # range from 1.0 to 100.0 with 0.1 increments
 
@@ -139,7 +143,8 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         if sys.argv[1] == "debug":
             debug = True
-            msg_utils.show_warning("Running in debug mode\nMake sure you know what you are doing.\nWhen using this mode, do not expect official support.")
+            msg_utils.show_warning(
+                "Running in debug mode\nMake sure you know what you are doing.\nWhen using this mode, do not expect official support.")
         else:
             debug = False
 
