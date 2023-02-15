@@ -69,7 +69,8 @@ class AI:
     layout = []
     window = None
 
-    def __init__(self):
+    def __init__(self, debug=False):
+        self.debug = debug
         if os.path.exists("src/configs/config.json"):
             with open("src/configs/config.json", "r") as f:
                 self.config = json.load(f)
@@ -365,6 +366,55 @@ class AI:
             [sg.VPush()]
 
         ]
+        if self.debug:
+            self.layout = [
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.Push(),
+                 sg.Text("Running in Debug mode.\nSliders are unlocked to unsafe values.", justification="center"),
+                 sg.Push()],
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.Push(), sg.Text("Box Constant"),
+                 sg.Slider(range=(4, self.half_screen_height * 2), default_value=self.config["box_constant"],
+                           key="box_constant", enable_events=True, orientation="horizontal"), sg.Push()],
+                [sg.Push(), sg.Text("Trigger FOV"),
+                 sg.Slider(range=(1, self.half_screen_height * 2), default_value=self.config["trigger_fov"],
+                           key="trigger_fov", enable_events=True, orientation="horizontal"), sg.Push()],
+                [sg.Push(), sg.Text("Aim FOV"),
+                 sg.Slider(range=(1, self.half_screen_height * 2), default_value=self.config["aim_fov"],
+                           key="aim_fov", enable_events=True, orientation="horizontal"), sg.Push()],
+                [sg.Push(), sg.Text("Aim Speed"),
+                 sg.Slider(range=(0, 100), default_value=self.config["aim_speed"], key="aim_speed", enable_events=True,
+                           orientation="horizontal"), sg.Push()],
+                [sg.Push(), sg.Text("Confidence"),
+                 sg.Slider(range=(0, 1), resolution=0.01, default_value=self.config["confidence"], key="confidence",
+                           enable_events=True, orientation="horizontal"), sg.Push()],
+                # margin between sliders and buttons
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.VPush()],
+                # add checkbox with visualize text on left and save button on right
+                [sg.Push(),
+                 sg.Checkbox("Visualize", key="visualize", default=self.config["visualize"], enable_events=True),
+                 sg.Push(),
+                 sg.Button("Save Config", key="save_cfg", enable_events=True), sg.Push()],
+                # add checkbox of always on top
+                [sg.Push(), sg.Checkbox("Always On Top", key="always_on_top", default=self.config["always_on_top"],
+                                        enable_events=True), sg.Push()],
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.VPush()],
+                # add text with status of ai, if true then "AI: Enabled" else "AI: Disabled"
+                [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"),
+                 sg.Push()],
+                [sg.Push(), sg.Text("Keybind: CAPS LOCK"), sg.Push()],
+                [sg.VPush()],
+                [sg.VPush()],
+                [sg.VPush()]
+            ]
 
         self.window = sg.Window("MistyFN", self.layout, finalize=True, icon="src/icon.ico")
         self.window.set_min_size((300, 1))
@@ -397,8 +447,11 @@ class AI:
             self.config["always_on_top"] = values["always_on_top"]
 
             if event == "save_cfg":
-                with open("src/configs/config.json", "w") as f:
-                    json.dump(self.config, f)
+                if self.debug:
+                    show_warning("You can't save config in debug mode!")
+                else:
+                    with open("src/configs/config.json", "w") as f:
+                        json.dump(self.config, f)
 
 
 if __name__ == '__main__':
