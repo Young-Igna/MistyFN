@@ -1,9 +1,10 @@
+![banner](https://repository-images.githubusercontent.com/601511587/ca4e45bf-d174-4e64-9793-d03468a8604d)
+
 # For educational purposes only!
 
 # MistyFN
 
-Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence
-**.
+Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence**.
 
 # How to set up?
 
@@ -20,8 +21,8 @@ version 515 or higher).**
 
 **After installation, restart your computer.**
 
-3. Download **latest** version from **[releases tab](https://github.com/MistyAI/MistyFN/releases/latest)** and run *
-   *install_requirements**.bat.\
+3. Download **latest** version from **[releases tab](https://github.com/MistyAI/MistyFN/releases/latest)** and run 
+   *install_requirements*.bat.\
    **Don't turn off any window that shows up, everything will close automatically after installation!**
 
 4. Run **MistyFN** via **start.vbs** file.
