@@ -29,6 +29,12 @@ version 515 or higher).**
 
 # Changelog
 
+### 1.0.2b:
+Added protection against situations, where someone accidentally deletes configs folder. \
+Added option to run MistyFN in unlocked/developer mode. \
+Added option to change activation button.
+
+
 ### 1.0.1b:
 
 Fixed missing application icon in specific cases. \
