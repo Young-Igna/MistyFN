@@ -88,7 +88,10 @@ class AI:
         window = sg.Window("Downloading...", layout, finalize=True, icon="src/icon.ico")
         window.set_min_size((300, 1))
         window.read(timeout=1)
-        self.model = torch.hub.load('MistyAI/MistyFN-YOLOv5', 'custom', path='src/best.pt', force_reload=True)
+        if self.debug:
+            self.model = torch.hub.load('MistyAI/MistyFN-YOLOv5', 'custom', path='src/best.pt', force_reload=False)
+        else:
+            self.model = torch.hub.load('MistyAI/MistyFN-YOLOv5', 'custom', path='src/best.pt', force_reload=True)
         window.close()
         if not torch.cuda.is_available():
             show_warning("CUDA acceleration is not available, performance will be affected.")
@@ -108,6 +111,8 @@ class AI:
             self.config["visualize"] = False
         if "always_on_top" not in self.config:
             self.config["always_on_top"] = True
+        if "keybind" not in self.config:
+            self.config["keybind"] = "Key.caps_lock"
 
         self.model.conf = self.config["confidence"]
         self.model.iou = 0.75
@@ -121,8 +126,20 @@ class AI:
 
     def on_release(self, key):
         try:
-            if key == keyboard.Key.caps_lock:
+            key = str(key).replace("'", "")
+            if key == self.config["keybind"]:
                 self.toggle()
+        except NameError:
+            pass
+
+    def on_press(self, key):
+        try:
+            # check if keybind inputtext is focused
+            if self.window.FindElementWithFocus() is not None:
+                if self.window.FindElementWithFocus().key == "keybind":
+                    self.config["keybind"] = str(key).replace("'", "")
+                    displayKey = str(key).replace("'", "").replace("Key.", "").replace("_", " ").upper()
+                    self.window["keybind"].update(displayKey)
         except NameError:
             pass
 
@@ -323,6 +340,7 @@ class AI:
 
     def start(self):
         # make layout with all values and sliders to them, make them with key, enable_events and description text next to them
+        displayKey = str(self.config["keybind"]).replace("Key.", "").replace("_", " ").upper()
         self.layout = [
             [sg.VPush()],
             [sg.VPush()],
@@ -359,8 +377,11 @@ class AI:
             [sg.VPush()],
 
             # add text with status of ai, if true then "AI: Enabled" else "AI: Disabled"
-            [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"), sg.Push()],
-            [sg.Push(), sg.Text("Keybind: CAPS LOCK"), sg.Push()],
+            [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"),
+             sg.Push()],
+            [sg.Push(), sg.Text("Keybind:"), sg.Push()],
+            [sg.Push(), sg.InputText(key="keybind", default_text=displayKey, justification="center", size=(20, 10)),
+             sg.Push()],
             [sg.VPush()],
             [sg.VPush()],
             [sg.VPush()]
@@ -410,7 +431,9 @@ class AI:
                 # add text with status of ai, if true then "AI: Enabled" else "AI: Disabled"
                 [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"),
                  sg.Push()],
-                [sg.Push(), sg.Text("Keybind: CAPS LOCK"), sg.Push()],
+                [sg.Push(), sg.Text("Keybind:"), sg.Push()],
+                [sg.Push(), sg.InputText(key="keybind", default_text=displayKey, justification="center", size=(20, 10)),
+                 sg.Push()],
                 [sg.VPush()],
                 [sg.VPush()],
                 [sg.VPush()]
@@ -419,7 +442,7 @@ class AI:
         self.window = sg.Window("MistyFN", self.layout, finalize=True, icon="src/icon.ico")
         self.window.set_min_size((300, 1))
 
-        keyboard.Listener(on_release=self.on_release).start()
+        keyboard.Listener(on_release=self.on_release, on_press=self.on_press).start()
 
         threading.Thread(target=self.handle_main_logic).start()
 
