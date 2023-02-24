@@ -109,10 +109,12 @@ class AI:
             self.config["confidence"] = 0.7
         if "visualize" not in self.config:
             self.config["visualize"] = False
-        if "always_on_top" not in self.config:
-            self.config["always_on_top"] = True
+        # if "always_on_top" not in self.config:
+        #     self.config["always_on_top"] = True
         if "keybind" not in self.config:
             self.config["keybind"] = "Key.caps_lock"
+        if "keybind_logic" not in self.config:
+            self.config["keybind_logic"] = "Toggle"
 
         self.model.conf = self.config["confidence"]
         self.model.iou = 0.75
@@ -127,8 +129,14 @@ class AI:
     def on_release(self, key):
         try:
             key = str(key).replace("'", "")
-            if key == self.config["keybind"]:
-                self.toggle()
+            if self.config["keybind_logic"] == "Toggle":
+                if key == self.config["keybind"]:
+                    self.toggle()
+            if self.config["keybind_logic"] == "Hold":
+                if key == self.config["keybind"]:
+                    self.enabled = False
+                    self.window["status"].update("Status: Disabled")
+
         except NameError:
             pass
 
@@ -140,6 +148,11 @@ class AI:
                     self.config["keybind"] = str(key).replace("'", "")
                     displayKey = str(key).replace("'", "").replace("Key.", "").replace("_", " ").upper()
                     self.window["keybind"].update(displayKey)
+            if self.config["keybind_logic"] == "Hold":
+                key = str(key).replace("'", "")
+                if key == self.config["keybind"]:
+                    self.enabled = True
+                    self.window["status"].update("Status: Enabled")
         except NameError:
             pass
 
@@ -311,19 +324,19 @@ class AI:
                            int(self.config["aim_fov"]), (255, 0, 0), 2)
 
                 cv2.imshow("MistyFN - Visualizer", frame)
-                if self.config["always_on_top"]:
-                    cv2.setWindowProperty("MistyFN - Visualizer", cv2.WND_PROP_TOPMOST, 1)
-                else:
-                    cv2.setWindowProperty("MistyFN - Visualizer", cv2.WND_PROP_TOPMOST, 0)
+                # if self.config["always_on_top"]:
+                #     cv2.setWindowProperty("MistyFN - Visualizer", cv2.WND_PROP_TOPMOST, 1)
+                # else:
+                #     cv2.setWindowProperty("MistyFN - Visualizer", cv2.WND_PROP_TOPMOST, 0)
                 if cv2.waitKey(1) & 0xFF == ord('0'):
                     break
             else:
                 cv2.destroyAllWindows()
-            if self.config["always_on_top"]:
-                # make main PySimplegUI window always on top
-                self.window.TKroot.attributes("-topmost", True)
-            else:
-                self.window.TKroot.attributes("-topmost", False)
+            # if self.config["always_on_top"]:
+            #     # make main PySimplegUI window always on top
+            #     self.window.TKroot.attributes("-topmost", True)
+            # else:
+            #     self.window.TKroot.attributes("-topmost", False)
 
     def handle_misty_logic(self, closest_player):
         if closest_player:
@@ -370,11 +383,11 @@ class AI:
              sg.Push(),
              sg.Button("Save Config", key="save_cfg", enable_events=True), sg.Push()],
             # add checkbox of always on top
-            [sg.Push(), sg.Checkbox("Always On Top", key="always_on_top", default=self.config["always_on_top"],
-                                    enable_events=True), sg.Push()],
-            [sg.VPush()],
-            [sg.VPush()],
-            [sg.VPush()],
+            # [sg.Push(), sg.Checkbox("Always On Top", key="always_on_top", default=self.config["always_on_top"],
+            #                         enable_events=True), sg.Push()],
+            # [sg.VPush()],
+            # [sg.VPush()],
+            # [sg.VPush()],
 
             # add text with status of ai, if true then "AI: Enabled" else "AI: Disabled"
             [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"),
@@ -382,6 +395,11 @@ class AI:
             [sg.Push(), sg.Text("Keybind:"), sg.Push()],
             [sg.Push(), sg.InputText(key="keybind", default_text=displayKey, justification="center", size=(20, 10)),
              sg.Push()],
+            # add switch to set hold or toggle mode with one entry in config
+            [sg.Push(), sg.Text("Keybind Logic:"), sg.Push()],
+            [sg.Push(),
+             sg.Combo(["Toggle", "Hold"], key="keybind_logic", default_value=self.config["keybind_logic"],
+                      enable_events=True), sg.Push()],
             [sg.VPush()],
             [sg.VPush()],
             [sg.VPush()]
@@ -423,17 +441,22 @@ class AI:
                  sg.Push(),
                  sg.Button("Save Config", key="save_cfg", enable_events=True), sg.Push()],
                 # add checkbox of always on top
-                [sg.Push(), sg.Checkbox("Always On Top", key="always_on_top", default=self.config["always_on_top"],
-                                        enable_events=True), sg.Push()],
-                [sg.VPush()],
-                [sg.VPush()],
-                [sg.VPush()],
+                # [sg.Push(), sg.Checkbox("Always On Top", key="always_on_top", default=self.config["always_on_top"],
+                #                         enable_events=True), sg.Push()],
+                # [sg.VPush()],
+                # [sg.VPush()],
+                # [sg.VPush()],
                 # add text with status of ai, if true then "AI: Enabled" else "AI: Disabled"
                 [sg.Push(), sg.Text("Status: Enabled" if self.enabled else "Status: Disabled", key="status"),
                  sg.Push()],
                 [sg.Push(), sg.Text("Keybind:"), sg.Push()],
                 [sg.Push(), sg.InputText(key="keybind", default_text=displayKey, justification="center", size=(20, 10)),
                  sg.Push()],
+                # add switch to set hold or toggle mode with one entry in config
+                [sg.Push(), sg.Text("Keybind Logic:"), sg.Push()],
+                [sg.Push(),
+                 sg.Combo(["Toggle", "Hold"], key="keybind_logic", default_value=self.config["keybind_logic"],
+                          enable_events=True), sg.Push()],
                 [sg.VPush()],
                 [sg.VPush()],
                 [sg.VPush()]
@@ -467,7 +490,8 @@ class AI:
                                   'width': int(self.config["box_constant"]),  # width of the box
                                   'height': int(self.config["box_constant"])}  # height of the box
             self.model.conf = self.config["confidence"]
-            self.config["always_on_top"] = values["always_on_top"]
+            # self.config["always_on_top"] = values["always_on_top"]
+            self.config["keybind_logic"] = values["keybind_logic"]
 
             if event == "save_cfg":
                 if self.debug:
