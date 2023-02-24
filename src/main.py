@@ -5,6 +5,7 @@ import webbrowser
 
 import PySimpleGUI as sg
 import requests
+from pypresence import Presence
 
 import msg_utils
 from ai import AI
@@ -15,6 +16,19 @@ version = "1.0.2b"
 
 # make debug var that will be usable in all files without having to import it
 debug = False
+
+
+def handle_presence():
+    # create presence object with client id 1078786103621988424 and large image of fn
+    presence = Presence(1078786103621988424)
+    # connect to discord
+    presence.connect()
+    # set presence to MistyFN title, large image of fn, and small image of MistyFN, state of version, large text of MistyFN, and button to https://github.com/MistyAI/MistyFN
+    presence.update(state="MistyFN " + version, large_image="fn", large_text="MistyFN",
+                    buttons=[{"label": "GitHub", "url": "https://github.com/MistyAI/MistyFN"}], start=1)
+
+
+handle_presence()
 
 
 def sensitivity_setup():

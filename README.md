@@ -4,7 +4,8 @@
 
 # MistyFN
 
-Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence**.
+Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence
+**.
 
 # How to set up?
 
@@ -21,7 +22,7 @@ version 515 or higher).**
 
 **After installation, restart your computer.**
 
-3. Download **latest** version from **[releases tab](https://github.com/MistyAI/MistyFN/releases/latest)** and run 
+3. Download **latest** version from **[releases tab](https://github.com/MistyAI/MistyFN/releases/latest)** and run
    *install_requirements*.bat.\
    **Don't turn off any window that shows up, everything will close automatically after installation!**
 
@@ -30,10 +31,10 @@ version 515 or higher).**
 # Changelog
 
 ### 1.0.2b:
+
 Added protection against situations, where someone accidentally deletes configs folder. \
 Added option to run MistyFN in unlocked/developer mode. \
 Added option to change activation button.
-
 
 ### 1.0.1b:
 
