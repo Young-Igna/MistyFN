@@ -4,8 +4,7 @@
 
 # MistyFN
 
-Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence
-**.
+Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence**.
 
 # How to set up?
 
@@ -29,6 +28,11 @@ version 515 or higher).**
 4. Run **MistyFN** via **start.vbs** file.
 
 # Changelog
+
+### 1.0.3b:
+Added Discord RPC.
+Added option to use features in hold mode.
+Disabled "Always on Top" due to a lot of bug reports.
 
 ### 1.0.2b:
 
