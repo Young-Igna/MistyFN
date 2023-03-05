@@ -12,7 +12,7 @@ from ai import AI
 
 sg.theme("DarkGrey5")
 
-version = "1.0.2b"
+version = "1.0.3b"
 
 # make debug var that will be usable in all files without having to import it
 debug = False
