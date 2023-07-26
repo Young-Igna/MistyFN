@@ -4,7 +4,7 @@
 
 # MistyFN
 
-Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence**.
+Undetectable **Aimbot** and **Triggerbot** for First public release of test version., **based on artificial intelligence**, we take this discontinued repository as a base to make it better , this is the old one
 
 # How to set up?
 
